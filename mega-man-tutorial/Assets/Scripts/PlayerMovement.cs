@@ -34,16 +34,23 @@ public class PlayerMovement : MonoBehaviour
 
     // Cached
     private Rigidbody2D myRigidbody;
+    private Animator animator;
 
-    // GETTERS / SETTERS
+    // GETTERS / SETTERS / PROPERTIES
 
     public int CurrentDirection { get => this.currentDirection; }
+    
+    public Animator GetAnimator ()
+    {
+        return this.animator;
+    }
 
     // OVERRIDED FUNCTIONS
 
     private void Awake () 
     {
         this.myRigidbody = this.GetComponent<Rigidbody2D>();
+        this.animator = this.GetComponent<Animator>();
     }
 
     private void Start () 
@@ -92,6 +99,8 @@ public class PlayerMovement : MonoBehaviour
         {
             isOnGround = true;
         }
+
+        animator.SetBool ("onGround", isOnGround);
     }
 
     private void GroundMovement ()
@@ -108,6 +117,8 @@ public class PlayerMovement : MonoBehaviour
         {
             currentCoyoteTime = Time.time + coyoteTimeDuration;
         }
+
+        animator.SetFloat ("speed", Mathf.Abs (currentHorizontalInput));
     }
 
     private void AirMovement ()

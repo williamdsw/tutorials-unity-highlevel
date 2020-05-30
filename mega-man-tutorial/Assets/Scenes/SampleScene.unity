@@ -180,6 +180,7 @@ GameObject:
   - component: {fileID: 900679506}
   - component: {fileID: 900679507}
   - component: {fileID: 900679510}
+  - component: {fileID: 900679511}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -417,7 +418,29 @@ MonoBehaviour:
     type: 3}
   shootSpeed: 20
   fireRate: 0.15
+  totalChargeSize: 3
+  totalChargeTimeToIncrement: 2
   currentFireRate: 0
+  currentChargingSize: 1
+--- !u!95 &900679511
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900679503}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 734fe83b1a66388438ab5e7649b6e5f1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1156227022
 GameObject:
   m_ObjectHideFlags: 0

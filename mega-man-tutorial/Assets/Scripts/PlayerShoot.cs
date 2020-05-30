@@ -71,5 +71,6 @@ public class PlayerShoot : MonoBehaviour
         currentChargingSize = 1;
 
         Destroy (newBullet.gameObject, 2f);
+        playerMovement.GetAnimator ().SetTrigger ("shoot");
     }
 }
