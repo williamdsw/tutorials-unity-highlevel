@@ -327,8 +327,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c115ed2da8edcb4d9a6fa784d250dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalSpeed: 0
+  movementSpeed: 5
+  jumpForce: 3
+  jumpHoldForce: 1
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  currentHorizontalInput: 0
   isHoldingJumpButton: 0
+  hasJumped: 0
+  isJumping: 0
+  currentJumpTime: 0
+  isOnGround: 0
 --- !u!61 &900679508
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -473,7 +483,7 @@ GameObject:
   - component: {fileID: 1906586944}
   - component: {fileID: 1906586943}
   - component: {fileID: 1906586942}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
