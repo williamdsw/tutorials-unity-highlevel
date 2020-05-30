@@ -333,12 +333,15 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  coyoteTimeDuration: 0.1
   currentHorizontalInput: 0
   isHoldingJumpButton: 0
   hasJumped: 0
   isJumping: 0
   currentJumpTime: 0
   isOnGround: 0
+  currentDirection: 1
+  currentCoyoteTime: 0
 --- !u!61 &900679508
 BoxCollider2D:
   m_ObjectHideFlags: 0

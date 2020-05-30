@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private float groundDistance = 0.15f;
     [SerializeField] private LayerMask groundLayerMask;
 
+    [SerializeField] private float coyoteTimeDuration = 0.1f;
+
     // State
     [SerializeField] private float currentHorizontalInput = 0;
     [SerializeField] private bool isHoldingJumpButton = false;
@@ -27,6 +29,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isJumping = false;
     [SerializeField] private float currentJumpTime;
     [SerializeField] private bool isOnGround = false;
+    [SerializeField] private int currentDirection = 1;
+    [SerializeField] private float currentCoyoteTime;
+
 
     // Cached
     private Rigidbody2D myRigidbody;
@@ -90,11 +95,21 @@ public class PlayerMovement : MonoBehaviour
     {
         float xVelocity = (movementSpeed * currentHorizontalInput);
         this.myRigidbody.velocity = new Vector2 (xVelocity, this.myRigidbody.velocity.y);
+
+        if (currentDirection * xVelocity < 0)
+        {
+            Flip ();
+        }
+
+        if (isOnGround)
+        {
+            currentCoyoteTime = Time.time + coyoteTimeDuration;
+        }
     }
 
     private void AirMovement ()
     {
-        if (hasJumped && isOnGround)
+        if (hasJumped && (isOnGround || currentCoyoteTime > Time.time))
         {
             hasJumped = false;
             isJumping = true;
@@ -103,6 +118,7 @@ public class PlayerMovement : MonoBehaviour
             myRigidbody.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
 
             currentJumpTime = (Time.time + jumpHoldDuration);
+            currentCoyoteTime = Time.time;
         }
 
         if (isJumping)
@@ -117,6 +133,8 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = false;
             }
         }
+
+        hasJumped = false;
     }
 
     private RaycastHit2D CheckCollision (Vector2 offset, Vector2 direction, float distance, LayerMask layerMask)
@@ -126,6 +144,14 @@ public class PlayerMovement : MonoBehaviour
         Color color = (hit ? Color.red : Color.green);
         Debug.DrawRay (position + offset, direction * distance, color);
         return hit;
+    }
+
+    private void Flip ()
+    {
+        currentDirection *= -1;
+        Vector3 currentScale = this.transform.localScale;
+        currentScale.x *= -1;
+        this.transform.localScale = currentScale;
     }
 
 }
