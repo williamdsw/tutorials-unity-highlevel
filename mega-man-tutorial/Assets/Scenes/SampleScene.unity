@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 900679509}
   - component: {fileID: 900679506}
   - component: {fileID: 900679507}
+  - component: {fileID: 900679510}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -307,7 +308,18 @@ MonoBehaviour:
     m_ActionId: 230cf026-bce0-48aa-bcc4-34a4e864c868
     m_ActionName: PlayerMovement/Jump[/Keyboard/space,/Keyboard/upArrow,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 900679510}
+        m_MethodName: OnShoot
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: daa68ae3-ab9b-47fc-9ca0-d194dde59fd7
     m_ActionName: PlayerMovement/Shoot[/Mouse/leftButton,/Keyboard/z,/XInputControllerWindows/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
@@ -389,6 +401,23 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &900679510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900679503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e379055339e443143b0b2e515dc4149c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabBullet: {fileID: 3629799641087613083, guid: 06df644cb9f6b2b4fb3ee20ca499c998,
+    type: 3}
+  shootSpeed: 20
+  fireRate: 0.15
+  currentFireRate: 0
 --- !u!1 &1156227022
 GameObject:
   m_ObjectHideFlags: 0

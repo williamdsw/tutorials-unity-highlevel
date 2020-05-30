@@ -32,9 +32,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private int currentDirection = 1;
     [SerializeField] private float currentCoyoteTime;
 
-
     // Cached
     private Rigidbody2D myRigidbody;
+
+    // GETTERS / SETTERS
+
+    public int CurrentDirection { get => this.currentDirection; }
 
     // OVERRIDED FUNCTIONS
 
