@@ -21,12 +21,14 @@ public class PlayerShoot : MonoBehaviour
     // Cached
     private InputAction.CallbackContext shootPhase;
     private PlayerMovement playerMovement;
+    private Transform bulletSpawner;
 
     // OVERRIDED FUNCTIONS
 
     private void Awake () 
     {
         this.playerMovement = this.GetComponent<PlayerMovement>();
+        this.bulletSpawner = this.transform.Find ("BulletSpawner");
     }
 
     private void Start ()
@@ -64,8 +66,9 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
 
+        Vector2 spawnPosition = (bulletSpawner ? bulletSpawner.position : this.transform.position);
         currentFireRate = (Time.time + fireRate);
-        Rigidbody2D newBullet = Instantiate (prefabBullet, this.transform.position, Quaternion.identity);
+        Rigidbody2D newBullet = Instantiate (prefabBullet, spawnPosition, Quaternion.identity);
         newBullet.velocity = (Vector2.right * shootSpeed * playerMovement.CurrentDirection);
         newBullet.transform.localScale *= currentChargingSize;
         currentChargingSize = 1;
