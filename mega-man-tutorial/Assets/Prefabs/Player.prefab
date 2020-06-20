@@ -206,6 +206,21 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: daa68ae3-ab9b-47fc-9ca0-d194dde59fd7
     m_ActionName: PlayerMovement/Shoot[/Mouse/leftButton,/Keyboard/z,/XInputControllerWindows/buttonWest]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 711193198678147886}
+        m_MethodName: OnClimb
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 43324051-6b3b-4340-ac24-872d8e3a4daa
+    m_ActionName: PlayerMovement/Climb[/Keyboard/s,/Keyboard/w]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerMovement
@@ -224,20 +239,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  jumpForce: 3
-  jumpHoldForce: 1
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  coyoteTimeDuration: 0.1
-  currentHorizontalInput: 0
+  climbSpeed: 3
+  ladderMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  isClimbing: 0
+  checkRadius: 0.3
+  ladder: {fileID: 0}
   isHoldingJumpButton: 0
   hasJumped: 0
   isJumping: 0
   currentJumpTime: 0
   isOnGround: 0
-  currentDirection: 1
+  jumpForce: 3
+  jumpHoldForce: 1
   currentCoyoteTime: 0
+  coyoteTimeDuration: 0.1
+  currentHorizontalInput: 0
+  currentDirection: 1
+  currentVerticalInput: 0
+  canMove: 1
 --- !u!114 &711193198678147883
 MonoBehaviour:
   m_ObjectHideFlags: 0
