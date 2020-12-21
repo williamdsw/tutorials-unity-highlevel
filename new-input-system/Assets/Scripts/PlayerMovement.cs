@@ -1,28 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // FIELDS
-
-    // config
-
     [SerializeField] private float speed = 6f;
     [SerializeField] private float jumpForce = 10f;
-
-    // state
-
     [SerializeField] private float horizontal;
     [SerializeField] private bool isJumping;
 
-    // cached
-
     private Rigidbody2D rigidBody2D;
     private PlayerInputActions input;
-
-    // MONOBEHAVIOUR FUNCTIONS
 
     private void Awake()
     {
@@ -59,8 +46,6 @@ public class PlayerMovement : MonoBehaviour
     {
         input.Disable();
     }
-
-    // HELPER FUNCTIONS
 
     public void Jump(InputAction.CallbackContext callback)
     {
