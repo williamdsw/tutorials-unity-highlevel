@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -37,8 +35,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody2D;
     private Animator animator;
 
-    // MONOBEHAVIOUR FUNCTIONS
-
     private void Awake()
     {
         rigidBody2D = GetComponent<Rigidbody2D>();
@@ -65,8 +61,6 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(this.transform.position + wallOffset, wallRadius);
         Gizmos.DrawWireSphere(this.transform.position - wallOffset, wallRadius);
     }
-
-    // HELPER FUNCTIONS
 
     private void GroundMovement()
     {
@@ -174,7 +168,6 @@ public class PlayerController : MonoBehaviour
 
         animator.SetBool("OnGround", onGround);
         animator.SetBool("OnWall", onWall);
-
     }
 
     public RaycastHit2D Raycast(Vector2 origin, Vector2 rayDirection, float length, LayerMask mask, bool drawRay = true)
