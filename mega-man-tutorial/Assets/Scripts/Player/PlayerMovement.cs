@@ -1,21 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // FIELDS
-
-    [Header ("Global Configuration")]
+    [Header("Global Configuration")]
     [SerializeField] private float movementSpeed = 5f;
-    private float leftFootOffset = - 0.35f;
+    private float leftFootOffset = -0.35f;
     private float rightFootOffset = 0.22f;
     private float groundOffset = 0.85f;
     private float groundDistance = 0.15f;
     [SerializeField] private LayerMask groundLayerMask;
 
-    [Header ("Ladder")]
+    [Header("Ladder")]
     [SerializeField] private float climbSpeed = 3f;
     [SerializeField] private LayerMask ladderMask;
 
@@ -23,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float checkRadius = 0.3f;
     [SerializeField] private Transform ladder;
 
-    [Header ("Jump")]
+    [Header("Jump")]
     [SerializeField] private bool isHoldingJumpButton = false;
     [SerializeField] private bool hasJumped = false;
     [SerializeField] private bool isJumping = false;
@@ -35,69 +31,48 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float currentCoyoteTime;
     [SerializeField] private float coyoteTimeDuration = 0.1f;
 
-    [Header ("States")]
+    [Header("States")]
     [SerializeField] private float currentHorizontalInput = 0;
     [SerializeField] private int currentDirection = 1;
     [SerializeField] private float currentVerticalInput = 0;
     [SerializeField] private bool canMove = true;
 
-    // Cached
-    private Rigidbody2D myRigidbody;
+    private Rigidbody2D rigidBody;
     private Animator animator;
-    private Collider2D myCollider2D;
+    private Collider2D collider2d;
 
-    // GETTERS / SETTERS / PROPERTIES
+    public int CurrentDirection { get => currentDirection; }
+    public Animator Animator { get => animator; }
 
-    public int CurrentDirection { get => this.currentDirection; }
-    
-    public Animator GetAnimator ()
+    private void Awake()
     {
-        return this.animator;
-    }
-
-    // OVERRIDED FUNCTIONS
-
-    private void Awake () 
-    {
-        this.myRigidbody = this.GetComponent<Rigidbody2D>();
+        this.rigidBody = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponent<Animator>();
-        this.myCollider2D = this.GetComponent<Collider2D>();
+        this.collider2d = this.GetComponent<Collider2D>();
     }
 
-    private void Start () 
+    private void FixedUpdate()
     {
-        
+        CheckPhysics();
+        GroundMovement();
+        AirMovement();
+        ClimbLadder();
     }
 
-    private void Update () 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-
-    }
-
-    private void FixedUpdate () 
-    {
-        CheckPhysics ();
-        GroundMovement ();
-        AirMovement ();
-        ClimbLadder ();
-    }
-
-    private void OnTriggerEnter2D (Collider2D other)
-    {
-        if (other.gameObject.layer == LayerMask.NameToLayer ("Ladder"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Ladder"))
         {
             ladder = other.transform;
         }
     }
 
-    // INPUT ACTIONS FUNCTIONS
-
-    public void OnMovement (InputAction.CallbackContext callback)
+    public void OnMovement(InputAction.CallbackContext callback)
     {
         currentHorizontalInput = callback.ReadValue<float>();
     }
 
-    public void OnJump (InputAction.CallbackContext callback) 
+    public void OnJump(InputAction.CallbackContext callback)
     {
         if (callback.started)
         {
@@ -107,48 +82,42 @@ public class PlayerMovement : MonoBehaviour
         isHoldingJumpButton = callback.performed;
     }
 
-    public void OnClimb (InputAction.CallbackContext callback) 
+    public void OnClimb(InputAction.CallbackContext callback)
     {
-        Debug.Log ("Callback");
-        Debug.Log (callback);
-        Debug.Log ("Climb...?");
+        Debug.Log("Callback");
+        Debug.Log(callback);
+        Debug.Log("Climb...?");
         currentVerticalInput = callback.ReadValue<float>();
     }
 
     // HELPER FUNCTIONS
 
-    private void CheckPhysics ()
+    private void CheckPhysics()
     {
-        if (!canMove)
-        {
-            return;
-        }
+        if (!canMove) return;
 
         isOnGround = false;
-        RaycastHit2D leftFoot = this.CheckCollision (new Vector2 (leftFootOffset, - groundOffset), Vector2.down, groundDistance, groundLayerMask);
-        RaycastHit2D rightFoot = this.CheckCollision (new Vector2 (rightFootOffset, - groundOffset), Vector2.down, groundDistance, groundLayerMask);
+        RaycastHit2D leftFoot = this.CheckCollision(new Vector2(leftFootOffset, -groundOffset), Vector2.down, groundDistance, groundLayerMask);
+        RaycastHit2D rightFoot = this.CheckCollision(new Vector2(rightFootOffset, -groundOffset), Vector2.down, groundDistance, groundLayerMask);
 
         if (leftFoot || rightFoot)
         {
             isOnGround = true;
         }
 
-        animator.SetBool ("onGround", isOnGround);
+        animator.SetBool("onGround", isOnGround);
     }
 
-    private void GroundMovement ()
+    private void GroundMovement()
     {
-        if (!canMove)
-        {
-            return;
-        }
+        if (!canMove) return;
 
         float xVelocity = (movementSpeed * currentHorizontalInput);
-        this.myRigidbody.velocity = new Vector2 (xVelocity, this.myRigidbody.velocity.y);
+        this.rigidBody.velocity = new Vector2(xVelocity, this.rigidBody.velocity.y);
 
         if (currentDirection * xVelocity < 0)
         {
-            Flip ();
+            Flip();
         }
 
         if (isOnGround)
@@ -156,18 +125,18 @@ public class PlayerMovement : MonoBehaviour
             currentCoyoteTime = Time.time + coyoteTimeDuration;
         }
 
-        animator.SetFloat ("speed", Mathf.Abs (currentHorizontalInput));
+        animator.SetFloat("speed", Mathf.Abs(currentHorizontalInput));
     }
 
-    private void AirMovement ()
+    private void AirMovement()
     {
         if (hasJumped && (isOnGround || currentCoyoteTime > Time.time))
         {
             hasJumped = false;
             isJumping = true;
 
-            myRigidbody.velocity = Vector2.zero;
-            myRigidbody.AddForce (Vector2.up * jumpForce, ForceMode2D.Impulse);
+            rigidBody.velocity = Vector2.zero;
+            rigidBody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
 
             currentJumpTime = (Time.time + jumpHoldDuration);
             currentCoyoteTime = Time.time;
@@ -177,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isHoldingJumpButton)
             {
-                myRigidbody.AddForce (Vector2.up * jumpHoldForce, ForceMode2D.Impulse);
+                rigidBody.AddForce(Vector2.up * jumpHoldForce, ForceMode2D.Impulse);
             }
 
             if (currentJumpTime <= Time.time)
@@ -189,16 +158,16 @@ public class PlayerMovement : MonoBehaviour
         hasJumped = false;
     }
 
-    private RaycastHit2D CheckCollision (Vector2 offset, Vector2 direction, float distance, LayerMask layerMask)
+    private RaycastHit2D CheckCollision(Vector2 offset, Vector2 direction, float distance, LayerMask layerMask)
     {
         Vector2 position = this.transform.position;
-        RaycastHit2D hit = Physics2D.Raycast (position + offset, direction, distance, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(position + offset, direction, distance, layerMask);
         Color color = (hit ? Color.red : Color.green);
-        Debug.DrawRay (position + offset, direction * distance, color);
+        Debug.DrawRay(position + offset, direction * distance, color);
         return hit;
     }
 
-    private void Flip ()
+    private void Flip()
     {
         currentDirection *= -1;
         Vector3 currentScale = this.transform.localScale;
@@ -206,51 +175,51 @@ public class PlayerMovement : MonoBehaviour
         this.transform.localScale = currentScale;
     }
 
-    private void ClimbLadder ()
+    private void ClimbLadder()
     {
-        bool isGoingUp = Physics2D.OverlapCircle (this.transform.position, checkRadius, ladderMask);
-        bool isGoindDown = Physics2D.OverlapCircle (this.transform.position + Vector3.down, checkRadius, ladderMask);
+        bool isGoingUp = Physics2D.OverlapCircle(this.transform.position, checkRadius, ladderMask);
+        bool isGoindDown = Physics2D.OverlapCircle(this.transform.position + Vector3.down, checkRadius, ladderMask);
 
-        if (currentVerticalInput != 0 && IsTouchingLadder ())
+        if (currentVerticalInput != 0 && IsTouchingLadder())
         {
             isClimbing = true;
-            myRigidbody.isKinematic = true;
+            rigidBody.isKinematic = true;
             canMove = false;
 
             float xPosition = ladder.position.x;
-            this.transform.position = new Vector2 (xPosition, this.transform.position.y);
+            this.transform.position = new Vector2(xPosition, this.transform.position.y);
         }
 
         if (isClimbing)
         {
             if (!isGoingUp && currentVerticalInput >= 0)
             {
-                FinishClimb ();
+                FinishClimb();
                 return;
             }
 
             if (!isGoindDown && currentVerticalInput <= 0)
             {
-                FinishClimb ();
+                FinishClimb();
                 return;
             }
 
             float y = (currentVerticalInput * climbSpeed);
-            myRigidbody.velocity = new Vector2 (0, y);
+            rigidBody.velocity = new Vector2(0, y);
         }
 
 
     }
 
-    private void FinishClimb ()
+    private void FinishClimb()
     {
         isClimbing = false;
-        myRigidbody.isKinematic = false;
+        rigidBody.isKinematic = false;
         canMove = true;
     }
 
-    private bool IsTouchingLadder ()
+    private bool IsTouchingLadder()
     {
-        return myCollider2D.IsTouchingLayers (ladderMask);
+        return collider2d.IsTouchingLayers(ladderMask);
     }
 }

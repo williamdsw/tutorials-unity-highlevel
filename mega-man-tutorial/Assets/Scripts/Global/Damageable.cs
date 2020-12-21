@@ -1,12 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 public abstract class Damageable : MonoBehaviour
 {
-    // FIELDS
-
     [SerializeField] protected int maxHealth;
     [SerializeField] protected float invencibleTime;
     private Color defaultColor;
@@ -14,63 +11,56 @@ public abstract class Damageable : MonoBehaviour
 
     protected int currentHealth;
     private bool canTakeDamage = true;
-    
+
     private SpriteRenderer spriteRenderer;
 
-    // MONOBEHAVIOUR FUNCTIONS
-
-    private void Awake () 
+    private void Awake()
     {
         spriteRenderer = this.GetComponent<SpriteRenderer>();
     }
 
-    protected void Start () 
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
         defaultColor = spriteRenderer.color;
     }
 
-    // FUNCTIONS
-
     public UnityEvent OnDamage;
     public UnityEvent OnFinishDamage;
     public UnityEvent OnDeath;
 
-    public void TakeDamage (int amount)
+    public void TakeDamage(int amount)
     {
-        if (!canTakeDamage)
-        {
-            return;
-        }
+        if (!canTakeDamage) return;
 
         canTakeDamage = false;
         currentHealth -= amount;
-        OnDamage.Invoke ();
-        StartCoroutine (TakingDamage ());
+        OnDamage.Invoke();
+        StartCoroutine(TakingDamage());
 
         if (currentHealth <= 0)
         {
-            OnDeath.Invoke ();
-            Death ();
+            OnDeath.Invoke();
+            Death();
         }
     }
 
-    private IEnumerator TakingDamage ()
+    private IEnumerator TakingDamage()
     {
         float timer = 0;
         while (timer < invencibleTime)
         {
             spriteRenderer.color = Color.clear;
-            yield return new WaitForSeconds (timeToWait);
+            yield return new WaitForSeconds(timeToWait);
             spriteRenderer.color = defaultColor;
-            yield return new WaitForSeconds (timeToWait);
+            yield return new WaitForSeconds(timeToWait);
             timer += 0.1f;
         }
 
         spriteRenderer.color = defaultColor;
         canTakeDamage = true;
-        OnFinishDamage.Invoke ();
+        OnFinishDamage.Invoke();
     }
 
-    public abstract void Death ();
+    public abstract void Death();
 }

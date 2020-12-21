@@ -1,43 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Damager : MonoBehaviour
 {
-    // FIELDS
-
     [SerializeField] private int damage;
     [SerializeField] private bool destroyOnDamage;
     [SerializeField] private float timeToDestroy;
 
-    // MONOBEHAVIOUR FUNCTIONS
-
-    private void OnCollisionEnter2D (Collision2D other) 
+    private void OnCollisionEnter2D(Collision2D other)
     {
         Damageable damageable = other.gameObject.GetComponent<Damageable>();
-        if (damageable != null)
+        if (damageable)
         {
-            ApplyDamage (damageable);
+            ApplyDamage(damageable);
         }
     }
 
-    private void OnTriggerEnter2D (Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
         Damageable damageable = other.GetComponent<Damageable>();
-        if (damageable != null)
+        if (damageable)
         {
-            ApplyDamage (damageable);
+            ApplyDamage(damageable);
         }
     }
 
-    // FUNCTIONS
-
-    private void ApplyDamage (Damageable damageable)
+    private void ApplyDamage(Damageable damageable)
     {
-        damageable.TakeDamage (damage);
+        damageable.TakeDamage(damage);
         if (destroyOnDamage)
         {
-            Destroy (gameObject, timeToDestroy);
+            Destroy(gameObject, timeToDestroy);
         }
     }
 }
