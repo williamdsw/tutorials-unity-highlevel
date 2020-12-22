@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -5760059987084338998}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,6 +54,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -184,6 +185,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711193198678147886}
+        m_TargetAssemblyTypeName: 
         m_MethodName: OnMovement
         m_Mode: 0
         m_Arguments:
@@ -199,6 +201,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711193198678147886}
+        m_TargetAssemblyTypeName: 
         m_MethodName: OnJump
         m_Mode: 0
         m_Arguments:
@@ -214,6 +217,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711193198678147883}
+        m_TargetAssemblyTypeName: 
         m_MethodName: OnShoot
         m_Mode: 0
         m_Arguments:
@@ -229,6 +233,7 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 711193198678147886}
+        m_TargetAssemblyTypeName: 
         m_MethodName: OnClimb
         m_Mode: 0
         m_Arguments:
@@ -320,6 +325,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -5760059987084338998}
+        m_TargetAssemblyTypeName: 
         m_MethodName: SetInvencible
         m_Mode: 6
         m_Arguments:
@@ -334,6 +340,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -5760059987084338998}
+        m_TargetAssemblyTypeName: 
         m_MethodName: SetInvencible
         m_Mode: 6
         m_Arguments:
@@ -348,6 +355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: -5760059987084338998}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Death
         m_Mode: 1
         m_Arguments:
