@@ -4,6 +4,9 @@ public class PlayerHealth : Damageable
 {
     private int defaultLayer;
 
+    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
+    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
+
     protected override void Start()
     {
         base.Start();
@@ -12,12 +15,28 @@ public class PlayerHealth : Damageable
 
     public override void Death()
     {
-        Debug.Log("Morreu");
+        if (LevelController.Instance.CheckpointReached)
+        {
+            Debug.Log("Checkpoint");
+            LevelController.Instance.Restart();
+            Respawn();
+        }
+        else
+        {
+            SceneController.Instance.RestartScene();
+        }
     }
 
     public void SetInvencible(bool state)
     {
-        int currentLayer = (state ? LayerMask.NameToLayer("Invencible") : defaultLayer);
-        gameObject.layer = currentLayer;
+        if (state)
+        {
+            UIManager.Instance.UpdateHealthBar(currentHealth);
+            gameObject.layer = LayerMask.NameToLayer("Invencible");
+        }
+        else
+        {
+            gameObject.layer = defaultLayer;
+        }
     }
 }

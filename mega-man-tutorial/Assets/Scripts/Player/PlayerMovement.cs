@@ -84,9 +84,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnClimb(InputAction.CallbackContext callback)
     {
-        Debug.Log("Callback");
-        Debug.Log(callback);
-        Debug.Log("Climb...?");
         currentVerticalInput = callback.ReadValue<float>();
     }
 

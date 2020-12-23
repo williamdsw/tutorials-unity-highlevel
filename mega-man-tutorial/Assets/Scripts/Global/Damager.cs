@@ -2,9 +2,11 @@
 
 public class Damager : MonoBehaviour
 {
-    [SerializeField] private int damage;
+    [SerializeField] private float damage;
     [SerializeField] private bool destroyOnDamage;
     [SerializeField] private float timeToDestroy;
+
+    public float Damage { get => damage; set => damage = value; }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -26,7 +28,7 @@ public class Damager : MonoBehaviour
 
     private void ApplyDamage(Damageable damageable)
     {
-        damageable.TakeDamage(damage);
+        damageable.TakeDamage(Damage);
         if (destroyOnDamage)
         {
             Destroy(gameObject, timeToDestroy);

@@ -11,6 +11,8 @@ public class RollingPlatform : MonoBehaviour
 
     private List<Rigidbody2D> listRigidBodies = new List<Rigidbody2D>();
 
+    public int CurrentDirection { get => currentDirection; set => currentDirection = value; }
+
     private void Start()
     {
         StartCoroutine(Rolling());
@@ -82,5 +84,10 @@ public class RollingPlatform : MonoBehaviour
                 renderer.sprite = sprite;
             }
         }
+    }
+
+    public void Clear()
+    {
+        listRigidBodies.Clear();
     }
 }

@@ -9,7 +9,7 @@ public abstract class Damageable : MonoBehaviour
     private Color defaultColor;
     private float timeToWait = 0.05f;
 
-    protected int currentHealth;
+    protected float currentHealth;
     private bool canTakeDamage = true;
 
     private SpriteRenderer spriteRenderer;
@@ -29,7 +29,7 @@ public abstract class Damageable : MonoBehaviour
     public UnityEvent OnFinishDamage;
     public UnityEvent OnDeath;
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(float amount)
     {
         if (!canTakeDamage) return;
 
@@ -63,4 +63,12 @@ public abstract class Damageable : MonoBehaviour
     }
 
     public abstract void Death();
+
+    public void Respawn()
+    {
+        Debug.Log("Respawn?");
+        currentHealth = maxHealth;
+        canTakeDamage = true;
+        TakeDamage(0);
+    }
 }
