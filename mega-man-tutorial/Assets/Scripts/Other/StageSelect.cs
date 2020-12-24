@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class StageSelect
+public class StageSelect : MonoBehaviour
 {
     [SerializeField] private Image selection;
     [SerializeField] private StageSelect up;

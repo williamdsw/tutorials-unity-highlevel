@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
@@ -35,7 +31,7 @@ public class Menu : MonoBehaviour
         currentStage.Selection.sprite = selected;
     }
 
-    private void OnCofirm()
+    private void OnConfirm()
     {
         if (isConfirmed) return;
 
