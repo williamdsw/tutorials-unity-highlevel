@@ -22,8 +22,23 @@ public class Blocky : MonoBehaviour
     private void Start()
     {
         scroller.enabled = true;
-        player = FindObjectOfType<PlayerMovement>().transform;
-        StartCoroutine(Behaviour());
+        var playerMovement = FindObjectOfType<PlayerMovement>();
+        if (playerMovement)
+        {
+            player = playerMovement.transform;
+            StartCoroutine(Behaviour());
+        }
+    }
+
+    private void Update()
+    {
+        if (player) return;
+        var playerMovement = FindObjectOfType<PlayerMovement>();
+        if (playerMovement)
+        {
+            player = playerMovement.transform;
+            StartCoroutine(Behaviour());
+        }
     }
 
     private IEnumerator Behaviour()

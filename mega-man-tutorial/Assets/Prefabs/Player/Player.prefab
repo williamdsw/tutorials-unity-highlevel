@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 711193198678147886}
   - component: {fileID: 711193198678147883}
   - component: {fileID: -5760059987084338998}
+  - component: {fileID: 1998069810}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -246,6 +247,50 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 43324051-6b3b-4340-ac24-872d8e3a4daa
     m_ActionName: PlayerMovement/Climb[/Keyboard/s,/Keyboard/w]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 6b778cad-54e0-4ee2-8f5c-fc19ae361d77
+    m_ActionName: PlayerMovement/Health[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 00767784-72cf-4a6a-a118-78667e1a4fe6
+    m_ActionName: PlayerMovement/Energy[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9923c3ad-50a8-4b55-bc4b-ec2686e19661
+    m_ActionName: WeaponMenu/Up[/Keyboard/w,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5dac6b6f-2594-4e6e-abc8-af473c248712
+    m_ActionName: WeaponMenu/Down[/Keyboard/s,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8e4b6125-c2fb-472a-a190-936fdcbcf601
+    m_ActionName: WeaponMenu/EnableMenu[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7f10c12c-372f-440f-85ec-3ecddaca18c8
+    m_ActionName: WeaponMenu/SelectWeapon[/Keyboard/enter,/Keyboard/numpadEnter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 4f1d3a15-186d-4ddb-ad81-04d141b8ff03
+    m_ActionName: StageSelect/Up[/Keyboard/w,/Keyboard/upArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: edafd4f6-fc9c-4550-8e0c-4f1698e70e4d
+    m_ActionName: StageSelect/Down[/Keyboard/s,/Keyboard/downArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 93bb7711-17f7-42ce-803d-aca81f0cd654
+    m_ActionName: StageSelect/Left[/Keyboard/a,/Keyboard/leftArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c91a14ba-6e6a-4954-88b4-ba7ed2cf5250
+    m_ActionName: StageSelect/Right[/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d0c65df8-f6b4-4b29-9252-ca23b7f25009
+    m_ActionName: StageSelect/Confirm[/Keyboard/enter,/Keyboard/numpadEnter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerMovement
@@ -263,7 +308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c115ed2da8edcb4d9a6fa784d250dfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  movementSpeed: 6
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 256
@@ -280,7 +325,7 @@ MonoBehaviour:
   currentJumpTime: 0
   isOnGround: 0
   jumpForce: 3
-  jumpHoldForce: 1
+  jumpHoldForce: 1.35
   currentCoyoteTime: 0
   coyoteTimeDuration: 0.1
   currentHorizontalInput: 0
@@ -366,6 +411,26 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1998069810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 711193198678147890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e98a6a8c5b8e7714c85000e40871679e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  current:
+    type: 0
+    name: 
+    spriteColor: {r: 0, g: 0, b: 0, a: 0}
+    energyAmount: 0
+    canCharge: 0
+    weaponShot: {fileID: 0}
+  energy: 0
 --- !u!1 &711193199517542084
 GameObject:
   m_ObjectHideFlags: 0

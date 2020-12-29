@@ -3,8 +3,8 @@
 public class PlayerWeapon : MonoBehaviour
 {
     private static PlayerWeapon instance;
-    private Weapon current;
-    private float energy;
+    [SerializeField] private Weapon current;
+    [SerializeField] private float energy;
     private bool isTimeStopped;
 
     private PlayerShoot playerShoot;
