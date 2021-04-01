@@ -1,47 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Chefe : Inimigo
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private float minTimeSpawnBoomerang = 8f;
-    [SerializeField] private float maxTimeSpawnBoomerang = 12f;
-
-    public GameObject prefabBoomerang;
-    private ControladorMusica musicController;
-    private GerenciadorUI uiManager;
-
-    private void Awake()
+    public class Chefe : Inimigo
     {
-        uiManager = FindObjectOfType<GerenciadorUI>();
+        [SerializeField] private float minTimeSpawnBoomerang = 8f;
+        [SerializeField] private float maxTimeSpawnBoomerang = 12f;
 
-        Invoke("ThrowBoomerang", Random.Range(minTimeSpawnBoomerang, maxTimeSpawnBoomerang));
+        public GameObject prefabBoomerang;
+        private ControladorMusica musicController;
+        private GerenciadorUI uiManager;
 
-        musicController = FindObjectOfType<ControladorMusica>();
-        musicController.PlaySong(musicController.MusicaChefe);
-    }
-
-    private void ThrowBoomerang()
-    {
-        if (!isDead)
+        private void Awake()
         {
-            animator.SetTrigger("Boomerang");
-            GameObject objectBoomerang = Instantiate(prefabBoomerang, transform.position, transform.rotation);
-            objectBoomerang.GetComponent<Boomerang>().BossDirection = (isFacingRight ? 1 : -1);
+            uiManager = FindObjectOfType<GerenciadorUI>();
+
             Invoke("ThrowBoomerang", Random.Range(minTimeSpawnBoomerang, maxTimeSpawnBoomerang));
+
+            musicController = FindObjectOfType<ControladorMusica>();
+            musicController.PlaySong(musicController.MusicaChefe);
         }
-    }
 
-    private void DefeatedBoss()
-    {
-        musicController.PlaySong(musicController.MusicaFinalizada);
-        float musicLength = (musicController.MusicaFinalizada.length + 2f);
-        uiManager.UpdateMessage("Level Clear!");
-        Invoke("LoadScene", musicLength);
-    }
+        private void ThrowBoomerang()
+        {
+            if (!isDead)
+            {
+                animator.SetTrigger("Boomerang");
+                GameObject objectBoomerang = Instantiate(prefabBoomerang, transform.position, transform.rotation);
+                objectBoomerang.GetComponent<Boomerang>().BossDirection = (isFacingRight ? 1 : -1);
+                Invoke("ThrowBoomerang", Random.Range(minTimeSpawnBoomerang, maxTimeSpawnBoomerang));
+            }
+        }
 
-    private void LoadScene()
-    {
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentIndex + 1);
+        private void DefeatedBoss()
+        {
+            musicController.PlaySong(musicController.MusicaFinalizada);
+            float musicLength = (musicController.MusicaFinalizada.length + 2f);
+            uiManager.UpdateMessage("Level Clear!");
+            Invoke("LoadScene", musicLength);
+        }
+
+        private void LoadScene()
+        {
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentIndex + 1);
+        }
     }
 }

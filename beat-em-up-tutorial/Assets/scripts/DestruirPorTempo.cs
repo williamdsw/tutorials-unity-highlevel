@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 
-public class DestruirPorTempo : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private float tempoDestruir;
-
-	private void Start ()
+    public class DestruirPorTempo : MonoBehaviour
     {
-        Destroy (gameObject, tempoDestruir);
-	}
+        [SerializeField] private float tempoDestruir;
+
+        private void Start()
+        {
+            Destroy(gameObject, tempoDestruir);
+        }
+    }
 }

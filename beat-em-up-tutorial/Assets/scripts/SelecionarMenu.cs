@@ -2,80 +2,83 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class SelecionarMenu : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private Image imageAdam;
-    [SerializeField] private Image imageAxel;
-    [SerializeField] private Animator animatorAdam;
-    [SerializeField] private Animator animatorAxel;
-
-    private int indexPlayer;
-    private Color color;
-    private AudioSource audioSource;
-    private GameManager gameManager;
-
-    private void Awake()
+    public class SelecionarMenu : MonoBehaviour
     {
-        audioSource = this.GetComponent<AudioSource>();
-    }
+        [SerializeField] private Image imageAdam;
+        [SerializeField] private Image imageAxel;
+        [SerializeField] private Animator animatorAdam;
+        [SerializeField] private Animator animatorAxel;
 
-    private void Start()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-        indexPlayer = 1;
-        color = imageAxel.color;
-    }
+        private int indexPlayer;
+        private Color color;
+        private AudioSource audioSource;
+        private GameManager gameManager;
 
-    private void Update()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal < 0)
+        private void Awake()
         {
-            indexPlayer = 0;
-            PlaySound();
+            audioSource = this.GetComponent<AudioSource>();
         }
-        else if (horizontal > 0)
+
+        private void Start()
         {
+            gameManager = FindObjectOfType<GameManager>();
             indexPlayer = 1;
-            PlaySound();
+            color = imageAxel.color;
         }
 
-        switch (indexPlayer)
+        private void Update()
         {
-            case 0:
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            if (horizontal < 0)
             {
-                imageAdam.color = Color.yellow;
-                animatorAdam.SetBool("Attack", true);
-                imageAxel.color = color;
-                animatorAxel.SetBool("Attack", false);
-                break;
+                indexPlayer = 0;
+                PlaySound();
+            }
+            else if (horizontal > 0)
+            {
+                indexPlayer = 1;
+                PlaySound();
             }
 
-            case 1:
+            switch (indexPlayer)
             {
-                imageAxel.color = Color.yellow;
-                animatorAxel.SetBool("Attack", true);
-                imageAdam.color = color;
-                animatorAdam.SetBool("Attack", false);
-                break;
+                case 0:
+                    {
+                        imageAdam.color = Color.yellow;
+                        animatorAdam.SetBool("Attack", true);
+                        imageAxel.color = color;
+                        animatorAxel.SetBool("Attack", false);
+                        break;
+                    }
+
+                case 1:
+                    {
+                        imageAxel.color = Color.yellow;
+                        animatorAxel.SetBool("Attack", true);
+                        imageAdam.color = color;
+                        animatorAdam.SetBool("Attack", false);
+                        break;
+                    }
+
+                default: break;
             }
 
-            default: break;
+            if (Input.GetButtonDown("Submit"))
+            {
+                gameManager.PlayerIndex = this.indexPlayer;
+                int currentIndex = SceneManager.GetActiveScene().buildIndex;
+                SceneManager.LoadScene(currentIndex + 1);
+            }
         }
 
-        if (Input.GetButtonDown("Submit"))
+        private void PlaySound()
         {
-            gameManager.PlayerIndex = this.indexPlayer;
-            int currentIndex = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentIndex + 1);
-        }
-    }
-
-    private void PlaySound()
-    {
-        if (!audioSource.isPlaying)
-        {
-            audioSource.Play();
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+            }
         }
     }
 }

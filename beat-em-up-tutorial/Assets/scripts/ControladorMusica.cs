@@ -1,35 +1,38 @@
 ﻿using UnityEngine;
 
-public class ControladorMusica : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private AudioClip musicaFase;
-    [SerializeField] private AudioClip musicaChefe;
-    [SerializeField] private AudioClip musicaFinalizada;
-    private AudioSource audioSource;
-
-    public AudioClip MusicaFase => musicaFase;
-    public AudioClip MusicaChefe => musicaChefe;
-    public AudioClip MusicaFinalizada => musicaFinalizada;
-
-    private void Awake()
+    public class ControladorMusica : MonoBehaviour
     {
-        audioSource = this.GetComponent<AudioSource>();
-    }
+        [SerializeField] private AudioClip musicaFase;
+        [SerializeField] private AudioClip musicaChefe;
+        [SerializeField] private AudioClip musicaFinalizada;
+        private AudioSource audioSource;
 
-    private void Start()
-    {
-        PlaySong(MusicaFase);
-    }
+        public AudioClip MusicaFase => musicaFase;
+        public AudioClip MusicaChefe => musicaChefe;
+        public AudioClip MusicaFinalizada => musicaFinalizada;
 
-    public void PlaySong(AudioClip audioClip)
-    {
-        audioSource.clip = audioClip;
-
-        if (audioClip == MusicaFinalizada)
+        private void Awake()
         {
-            audioSource.loop = false;
+            audioSource = this.GetComponent<AudioSource>();
         }
 
-        audioSource.Play();
+        private void Start()
+        {
+            PlaySong(MusicaFase);
+        }
+
+        public void PlaySong(AudioClip audioClip)
+        {
+            audioSource.clip = audioClip;
+
+            if (audioClip == MusicaFinalizada)
+            {
+                audioSource.loop = false;
+            }
+
+            audioSource.Play();
+        }
     }
 }

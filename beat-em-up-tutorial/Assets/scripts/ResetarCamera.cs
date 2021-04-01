@@ -1,25 +1,28 @@
 ﻿using UnityEngine;
 
-public class ResetarCamera : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    private Animator animator;
-    private CameraSeguidora followerCamera;
-
-    private void Awake()
+    public class ResetarCamera : MonoBehaviour
     {
-        animator = this.GetComponent<Animator>();
-    }
+        private Animator animator;
+        private CameraSeguidora followerCamera;
 
-    public void Ativar()
-    {
-        followerCamera = FindObjectOfType<CameraSeguidora>();
-        animator.SetTrigger("Go");
-    }
+        private void Awake()
+        {
+            animator = this.GetComponent<Animator>();
+        }
 
-    public void ResetCamera()
-    {
-        var current = followerCamera.MaximoXY;
-        current.x = 200f;
-        followerCamera.MaximoXY = current;
+        public void Ativar()
+        {
+            followerCamera = FindObjectOfType<CameraSeguidora>();
+            animator.SetTrigger("Go");
+        }
+
+        public void ResetCamera()
+        {
+            Vector2 current = followerCamera.MaximoXY;
+            current.x = 200f;
+            followerCamera.MaximoXY = current;
+        }
     }
 }

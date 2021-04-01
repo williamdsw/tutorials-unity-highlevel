@@ -1,19 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Menu : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    private void Update()
+    public class Menu : MonoBehaviour
     {
-        if (Input.anyKeyDown)
+        private void Update()
         {
-            LoadScene();
+            if (Input.anyKeyDown)
+            {
+                LoadScene();
+            }
         }
-    }
 
-    private void LoadScene()
-    {
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentIndex + 1);
+        private void LoadScene()
+        {
+            int currentIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentIndex + 1);
+        }
     }
 }

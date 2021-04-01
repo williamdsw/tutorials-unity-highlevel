@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 
-public class ArmaColetavel : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private ArmaItem weapon;
-    private SpriteRenderer spriteRenderer;
-
-    public ArmaItem Weapon { get => weapon; set => weapon = value; }
-
-    private void Awake()
+    public class ArmaColetavel : MonoBehaviour
     {
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-    }
+        [SerializeField] private ArmaItem weapon;
+        private SpriteRenderer spriteRenderer;
 
-    private void Start()
-    {
-        spriteRenderer.sprite = Weapon.Sprite;
-        spriteRenderer.color = Weapon.Color;
+        public ArmaItem Weapon { get => weapon; set => weapon = value; }
+
+        private void Awake()
+        {
+            spriteRenderer = this.GetComponent<SpriteRenderer>();
+        }
+
+        private void Start()
+        {
+            spriteRenderer.sprite = Weapon.Sprite;
+            spriteRenderer.color = Weapon.Color;
+        }
     }
 }

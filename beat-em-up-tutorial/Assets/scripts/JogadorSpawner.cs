@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public class JogadorSpawner : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private GameObject[] prefabPlayer;
-    private GameManager gameManager;
-
-    private void Awake ()
+    public class JogadorSpawner : MonoBehaviour
     {
-        gameManager = FindObjectOfType<GameManager> ();
-        Instantiate (prefabPlayer[gameManager.PlayerIndex], transform.position, transform.rotation);
+        [SerializeField] private GameObject[] prefabPlayer;
+        private GameManager gameManager;
+
+        private void Awake()
+        {
+            gameManager = FindObjectOfType<GameManager>();
+            Instantiate(prefabPlayer[gameManager.PlayerIndex], transform.position, transform.rotation);
+        }
     }
 }

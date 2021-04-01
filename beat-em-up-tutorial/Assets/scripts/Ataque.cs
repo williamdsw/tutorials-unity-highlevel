@@ -1,37 +1,40 @@
 ﻿using UnityEngine;
 
-public class Ataque : MonoBehaviour
+namespace BeatEmUpTutorial
 {
-    [SerializeField] private int damageValue;
-    public int DamageValue { get => damageValue; set => damageValue = value; }
-
-    private void OnTriggerEnter (Collider collider)
+    public class Ataque : MonoBehaviour
     {
-        switch (collider.gameObject.layer)
+        [SerializeField] private int damageValue;
+        public int DamageValue { get => damageValue; set => damageValue = value; }
+
+        private void OnTriggerEnter(Collider collider)
         {
-            case 9:
+            switch (collider.gameObject.layer)
             {
-                Jogador player = collider.GetComponent<Jogador> ();
-                if (player)
+                case 9:
                 {
-                    player.TakeDamage (DamageValue);
+                    Jogador player = collider.GetComponent<Jogador>();
+                    if (player)
+                    {
+                        player.TakeDamage(DamageValue);
+                    }
+
+                    break;
                 }
 
-                break;
-            }
-
-            case 11:
-            {
-                Inimigo enemy = collider.GetComponent<Inimigo> ();
-                if (enemy)
+                case 11:
                 {
-                    enemy.TakeDamage (DamageValue);
+                    Inimigo enemy = collider.GetComponent<Inimigo>();
+                    if (enemy)
+                    {
+                        enemy.TakeDamage(DamageValue);
+                    }
+
+                    break;
                 }
 
-                break;
+                default: break;
             }
-
-            default: break;
         }
     }
 }
