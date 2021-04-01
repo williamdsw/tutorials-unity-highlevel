@@ -1,20 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class IntroText
+namespace Other
 {
-    [SerializeField] private string text;
-    [SerializeField] private float time;
-
-    public IntroText() { }
-
-    public IntroText(string text, float time)
+    [Serializable]
+    public class IntroText
     {
-        Text = text;
-        Time = time;
-    }
+        [SerializeField] private string text;
+        [SerializeField] private float time;
 
-    public string Text { get => text; set => text = value; }
-    public float Time { get => time; set => time = value; }
+        public IntroText() { }
+
+        public IntroText(string text, float time)
+        {
+            Text = text;
+            Time = time;
+        }
+
+        public string Text { get => text; set => text = value; }
+        public float Time { get => time; set => time = value; }
+    }
 }

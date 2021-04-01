@@ -1,20 +1,23 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Press : MonoBehaviour
+namespace Enemies
 {
-    [SerializeField] private Vector2 interval = new Vector2(0.5f, 2f);
-    private Animator animator;
-
-    private void Awake()
+    public class Press : MonoBehaviour
     {
-        animator = this.GetComponent<Animator>();
-        animator.enabled = false;
-    }
+        [SerializeField] private Vector2 interval = new Vector2(0.5f, 2f);
+        private Animator animator;
 
-    private IEnumerator Start()
-    {
-        yield return new WaitForSeconds(Random.Range(interval.x, interval.y));
-        animator.enabled = true;
+        private void Awake()
+        {
+            animator = this.GetComponent<Animator>();
+            animator.enabled = false;
+        }
+
+        private IEnumerator Start()
+        {
+            yield return new WaitForSeconds(Random.Range(interval.x, interval.y));
+            animator.enabled = true;
+        }
     }
 }

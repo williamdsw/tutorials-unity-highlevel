@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-public class Scroller : MonoBehaviour
+namespace Other
 {
-    [SerializeField] private Vector2 speed;
-
-    public Vector2 Speed { get => speed; private set => speed = value; }
-
-    private void Update()
+    public class Scroller : MonoBehaviour
     {
-        transform.Translate(Speed * Time.deltaTime);
+        [SerializeField] private Vector2 speed;
+
+        public Vector2 Speed { get => speed; private set => speed = value; }
+
+        private void Update()
+        {
+            transform.Translate(Speed * Time.deltaTime);
+        }
     }
 }

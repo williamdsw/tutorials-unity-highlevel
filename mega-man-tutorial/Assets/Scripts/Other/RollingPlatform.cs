@@ -2,92 +2,95 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RollingPlatform : MonoBehaviour
+namespace Other
 {
-    [SerializeField] private int currentDirection = 1;
-    [SerializeField] private SpriteRenderer[] arrowsSpriteRenderers;
-    [SerializeField] private Sprite[] arrowsSprites; // 0 - EMPTY, 1 - RIGHT, 2 - LEFT
-    [SerializeField] private float impulseForce = 200;
-
-    private List<Rigidbody2D> listRigidBodies = new List<Rigidbody2D>();
-
-    public int CurrentDirection { get => currentDirection; set => currentDirection = value; }
-
-    private void Start()
+    public class RollingPlatform : MonoBehaviour
     {
-        StartCoroutine(Rolling());
-    }
+        [SerializeField] private int currentDirection = 1;
+        [SerializeField] private SpriteRenderer[] arrowsSpriteRenderers;
+        [SerializeField] private Sprite[] arrowsSprites; // 0 - EMPTY, 1 - RIGHT, 2 - LEFT
+        [SerializeField] private float impulseForce = 200;
 
-    private void FixedUpdate()
-    {
-        foreach (Rigidbody2D rb in listRigidBodies)
+        private List<Rigidbody2D> listRigidBodies = new List<Rigidbody2D>();
+
+        public int CurrentDirection { get => currentDirection; set => currentDirection = value; }
+
+        private void Start()
         {
-            rb.AddForce(Vector2.right * currentDirection * impulseForce);
+            StartCoroutine(Rolling());
         }
-    }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        Rigidbody2D rb = null;
-        if (checkIfRigidbodyExists(other, out rb))
+        private void FixedUpdate()
         {
-            listRigidBodies.Add(rb);
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        Rigidbody2D rb = null;
-        if (checkIfRigidbodyExists(other, out rb))
-        {
-            if (listRigidBodies.Contains(rb))
+            foreach (Rigidbody2D rb in listRigidBodies)
             {
-                listRigidBodies.Remove(rb);
+                rb.AddForce(Vector2.right * currentDirection * impulseForce);
             }
         }
-    }
 
-    private bool checkIfRigidbodyExists(Collision2D other, out Rigidbody2D current)
-    {
-        Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
-        current = rb;
-        return rb != null;
-    }
-
-    private IEnumerator Rolling()
-    {
-        while (true)
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            if (currentDirection > 0)
+            Rigidbody2D rb = null;
+            if (CheckIfRigidbodyExists(other, out rb))
             {
-                iterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[0]);
-                yield return new WaitForSeconds(0.1f);
-                iterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[1]);
-                yield return new WaitForSeconds(0.1f);
-            }
-            else
-            {
-                iterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[0]);
-                yield return new WaitForSeconds(0.1f);
-                iterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[2]);
-                yield return new WaitForSeconds(0.1f);
+                listRigidBodies.Add(rb);
             }
         }
-    }
 
-    private void iterateSpriteRendererArrayAndSetSprite(SpriteRenderer[] array, Sprite sprite)
-    {
-        foreach (SpriteRenderer renderer in array)
+        private void OnCollisionExit2D(Collision2D other)
         {
-            if (renderer && sprite)
+            Rigidbody2D rb = null;
+            if (CheckIfRigidbodyExists(other, out rb))
             {
-                renderer.sprite = sprite;
+                if (listRigidBodies.Contains(rb))
+                {
+                    listRigidBodies.Remove(rb);
+                }
             }
         }
-    }
 
-    public void Clear()
-    {
-        listRigidBodies.Clear();
+        private bool CheckIfRigidbodyExists(Collision2D other, out Rigidbody2D current)
+        {
+            Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
+            current = rb;
+            return rb != null;
+        }
+
+        private IEnumerator Rolling()
+        {
+            while (true)
+            {
+                if (currentDirection > 0)
+                {
+                    IterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[0]);
+                    yield return new WaitForSeconds(0.1f);
+                    IterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[1]);
+                    yield return new WaitForSeconds(0.1f);
+                }
+                else
+                {
+                    IterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[0]);
+                    yield return new WaitForSeconds(0.1f);
+                    IterateSpriteRendererArrayAndSetSprite(arrowsSpriteRenderers, arrowsSprites[2]);
+                    yield return new WaitForSeconds(0.1f);
+                }
+            }
+        }
+
+        private void IterateSpriteRendererArrayAndSetSprite(SpriteRenderer[] array, Sprite sprite)
+        {
+            foreach (SpriteRenderer renderer in array)
+            {
+                if (renderer && sprite)
+                {
+                    renderer.sprite = sprite;
+                }
+            }
+        }
+
+        public void Clear()
+        {
+            listRigidBodies.Clear();
+        }
     }
 }

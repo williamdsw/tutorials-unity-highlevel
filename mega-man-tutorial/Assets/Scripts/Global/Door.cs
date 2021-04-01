@@ -1,3 +1,6 @@
 ﻿using UnityEngine;
 
-public class Door : MonoBehaviour { }
+namespace Global
+{
+    public class Door : MonoBehaviour { }
+}

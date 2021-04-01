@@ -1,110 +1,114 @@
-﻿using UnityEngine;
+﻿using Player;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
-using TMPro;
 
-public class UIManager : MonoBehaviour
+namespace Managers
 {
-    [SerializeField] private TextMeshProUGUI energyText;
-    [SerializeField] private TextMeshProUGUI lifeText;
-    [SerializeField] private Image energyBar;
-    [SerializeField] private Image healthBar;
-    [SerializeField] private Image bossHealthBar;
-    [SerializeField] private TextMeshProUGUI[] weaponsTexts;
-    [SerializeField] private GameObject weaponPanel;
-    [SerializeField] private Transform cursor;
-
-    private int cursorIndex;
-    private bool isPaused = false;
-
-    private static UIManager instance;
-
-    public static UIManager Instance { get => instance; private set => instance = value; }
-    public bool IsPaused { get => isPaused; set => isPaused = value; }
-
-    private void Awake()
+    public class UIManager : MonoBehaviour
     {
-        Instance = this;
-    }
+        [SerializeField] private TextMeshProUGUI energyText;
+        [SerializeField] private TextMeshProUGUI lifeText;
+        [SerializeField] private Image energyBar;
+        [SerializeField] private Image healthBar;
+        [SerializeField] private Image bossHealthBar;
+        [SerializeField] private TextMeshProUGUI[] weaponsTexts;
+        [SerializeField] private GameObject weaponPanel;
+        [SerializeField] private Transform cursor;
 
-    private void Start()
-    {
-        for (int index = 0; index < GameManager.Instance.Weapons.Count; index++)
+        private int cursorIndex;
+        private bool isPaused = false;
+
+        private static UIManager instance;
+
+        public static UIManager Instance { get => instance; private set => instance = value; }
+        public bool IsPaused { get => isPaused; set => isPaused = value; }
+
+        private void Awake()
         {
-            weaponsTexts[index].text = GameManager.Instance.Weapons[index].Name;
+            Instance = this;
         }
-    }
 
-    public void OnEnableMenu(InputValue value)
-    {
-        Pause();
-    }
-
-    private void Pause()
-    {
-        IsPaused = !IsPaused;
-        weaponPanel.SetActive(!weaponPanel.activeSelf);
-
-        if (IsPaused)
+        private void Start()
         {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            if (PlayerWeapon.Instance.IsTimeStopped)
+            for (int index = 0; index < GameManager.Instance.Weapons.Count; index++)
             {
-                Time.timeScale = 0.25f;
+                weaponsTexts[index].text = GameManager.Instance.Weapons[index].Name;
+            }
+        }
+
+        public void OnEnableMenu(InputValue value)
+        {
+            Pause();
+        }
+
+        private void Pause()
+        {
+            IsPaused = !IsPaused;
+            weaponPanel.SetActive(!weaponPanel.activeSelf);
+
+            if (IsPaused)
+            {
+                Time.timeScale = 0;
             }
             else
             {
-                Time.timeScale = 1f;
+                if (PlayerWeapon.Instance.IsTimeStopped)
+                {
+                    Time.timeScale = 0.25f;
+                }
+                else
+                {
+                    Time.timeScale = 1f;
+                }
             }
         }
-    }
 
-    public void OnSelectWeapon(InputValue value)
-    {
-        if (!weaponPanel.activeSelf) return;
-        PlayerWeapon.Instance.SelectWeapon(GameManager.Instance.Weapons[cursorIndex]);
-        Pause();
-    }
+        public void OnSelectWeapon(InputValue value)
+        {
+            if (!weaponPanel.activeSelf) return;
+            PlayerWeapon.Instance.SelectWeapon(GameManager.Instance.Weapons[cursorIndex]);
+            Pause();
+        }
 
-    public void OnUp(InputValue value)
-    {
-        if (!weaponPanel.activeSelf || cursorIndex <= 0) return;
-        cursorIndex--;
-        cursor.localPosition = new Vector2(cursor.localPosition.x, cursor.localPosition.y + 45);
-    }
+        public void OnUp(InputValue value)
+        {
+            if (!weaponPanel.activeSelf || cursorIndex <= 0) return;
+            cursorIndex--;
+            cursor.localPosition = new Vector2(cursor.localPosition.x, cursor.localPosition.y + 45);
+        }
 
-    public void OnDown(InputValue value)
-    {
-        if (!weaponPanel.activeSelf || cursorIndex >= GameManager.Instance.Weapons.Count - 1) return;
-        cursorIndex++;
-        cursor.localPosition = new Vector2(cursor.localPosition.x, cursor.localPosition.y - 45);
-    }
+        public void OnDown(InputValue value)
+        {
+            if (!weaponPanel.activeSelf || cursorIndex >= GameManager.Instance.Weapons.Count - 1) return;
+            cursorIndex++;
+            cursor.localPosition = new Vector2(cursor.localPosition.x, cursor.localPosition.y - 45);
+        }
 
-    public void UpdateEnergyBar(float energy)
-    {
-        energyBar.fillAmount = energy;
-    }
+        public void UpdateEnergyBar(float energy)
+        {
+            energyBar.fillAmount = energy;
+        }
 
-    public void UpdateHealthBar(float health)
-    {
-        healthBar.fillAmount = (health / 10);
-    }
+        public void UpdateHealthBar(float health)
+        {
+            healthBar.fillAmount = (health / 10);
+        }
 
-    public void UpdateBossHealthBar(float health)
-    {
-        bossHealthBar.fillAmount = (health / 30);
-    }
+        public void UpdateBossHealthBar(float health)
+        {
+            bossHealthBar.fillAmount = (health / 30);
+        }
 
-    public void UpdateHealthTanks(int health)
-    {
-        lifeText.text = string.Concat("x", health);
-    }
+        public void UpdateHealthTanks(int health)
+        {
+            lifeText.text = string.Concat("x", health);
+        }
 
-    public void UpdateEnergyTanks(int energy)
-    {
-        energyText.text = string.Concat("x", energy);
+        public void UpdateEnergyTanks(int energy)
+        {
+            energyText.text = string.Concat("x", energy);
+        }
     }
 }

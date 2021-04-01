@@ -1,42 +1,47 @@
-﻿using UnityEngine;
+﻿using Global;
+using Managers;
+using UnityEngine;
 
-public class PlayerHealth : Damageable
+namespace Player
 {
-    private int defaultLayer;
-
-    public int MaxHealth { get => maxHealth; set => maxHealth = value; }
-    public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
-
-    protected override void Start()
+    public class PlayerHealth : Damageable
     {
-        base.Start();
-        defaultLayer = gameObject.layer;
-    }
+        private int defaultLayer;
 
-    public override void Death()
-    {
-        if (LevelController.Instance.CheckpointReached)
-        {
-            Debug.Log("Checkpoint");
-            LevelController.Instance.Restart();
-            Respawn();
-        }
-        else
-        {
-            SceneController.Instance.RestartScene();
-        }
-    }
+        public int MaxHealth { get => maxHealth; set => maxHealth = value; }
+        public float CurrentHealth { get => currentHealth; set => currentHealth = value; }
 
-    public void SetInvencible(bool state)
-    {
-        if (state)
+        protected override void Start()
         {
-            UIManager.Instance.UpdateHealthBar(currentHealth);
-            gameObject.layer = LayerMask.NameToLayer("Invencible");
+            base.Start();
+            defaultLayer = gameObject.layer;
         }
-        else
+
+        public override void Death()
         {
-            gameObject.layer = defaultLayer;
+            if (LevelController.Instance.CheckpointReached)
+            {
+                Debug.Log("Checkpoint");
+                LevelController.Instance.Restart();
+                Respawn();
+            }
+            else
+            {
+                SceneController.Instance.RestartScene();
+            }
+        }
+
+        public void SetInvencible(bool state)
+        {
+            if (state)
+            {
+                UIManager.Instance.UpdateHealthBar(currentHealth);
+                gameObject.layer = LayerMask.NameToLayer("Invencible");
+            }
+            else
+            {
+                gameObject.layer = defaultLayer;
+            }
         }
     }
 }

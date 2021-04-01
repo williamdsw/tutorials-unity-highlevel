@@ -1,3 +1,6 @@
 ﻿using UnityEngine;
 
-public class Boss : MonoBehaviour { }
+namespace Enemies
+{
+    public class Boss : MonoBehaviour { }
+}

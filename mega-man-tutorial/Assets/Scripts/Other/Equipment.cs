@@ -1,20 +1,23 @@
 ﻿using System;
 using UnityEngine;
 
-[Serializable]
-public class Equipment
+namespace Other
 {
-    [SerializeField] private string weaponName;
-    [SerializeField] private string animation;
-
-    public Equipment() { }
-
-    public Equipment(string weaponName, string animation)
+    [Serializable]
+    public class Equipment
     {
-        WeaponName = weaponName;
-        Animation = animation;
-    }
+        [SerializeField] private string weaponName;
+        [SerializeField] private string animation;
 
-    public string WeaponName { get => weaponName; set => weaponName = value; }
-    public string Animation { get => animation; set => animation = value; }
+        public Equipment() { }
+
+        public Equipment(string weaponName, string animation)
+        {
+            WeaponName = weaponName;
+            Animation = animation;
+        }
+
+        public string WeaponName { get => weaponName; set => weaponName = value; }
+        public string Animation { get => animation; set => animation = value; }
+    }
 }

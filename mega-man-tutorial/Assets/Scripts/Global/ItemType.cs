@@ -1,5 +1,7 @@
-﻿
-public enum ItemType
+﻿namespace Global
 {
-    Energy, Health
+    public enum ItemType
+    {
+        Energy, Health
+    }
 }

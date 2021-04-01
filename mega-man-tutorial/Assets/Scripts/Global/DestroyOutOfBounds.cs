@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class DestroyOutOfBounds : MonoBehaviour
+namespace Global
 {
-    private void OnBecameInvisible()
+    public class DestroyOutOfBounds : MonoBehaviour
     {
-        Destroy(gameObject);
+        private void OnBecameInvisible()
+        {
+            Destroy(gameObject);
+        }
     }
 }

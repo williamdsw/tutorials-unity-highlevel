@@ -1,14 +1,18 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 
-public class CameraTrigger : MonoBehaviour
+namespace Global
 {
-    [SerializeField] private GameObject targetCamera;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class CameraTrigger : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        [SerializeField] private GameObject targetCamera;
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            CameraController.Instance.EnableCamera(targetCamera);
+            if (other.CompareTag("Player"))
+            {
+                CameraController.Instance.EnableCamera(targetCamera);
+            }
         }
     }
 }

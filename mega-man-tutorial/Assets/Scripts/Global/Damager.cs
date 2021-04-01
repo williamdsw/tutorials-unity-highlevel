@@ -1,37 +1,40 @@
 ﻿using UnityEngine;
 
-public class Damager : MonoBehaviour
+namespace Global
 {
-    [SerializeField] private float damage;
-    [SerializeField] private bool destroyOnDamage;
-    [SerializeField] private float timeToDestroy;
-
-    public float Damage { get => damage; set => damage = value; }
-
-    private void OnCollisionEnter2D(Collision2D other)
+    public class Damager : MonoBehaviour
     {
-        Damageable damageable = other.gameObject.GetComponent<Damageable>();
-        if (damageable)
+        [SerializeField] private float damage;
+        [SerializeField] private bool destroyOnDamage;
+        [SerializeField] private float timeToDestroy;
+
+        public float Damage { get => damage; set => damage = value; }
+
+        private void OnCollisionEnter2D(Collision2D other)
         {
-            ApplyDamage(damageable);
+            Damageable damageable = other.gameObject.GetComponent<Damageable>();
+            if (damageable)
+            {
+                ApplyDamage(damageable);
+            }
         }
-    }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        Damageable damageable = other.GetComponent<Damageable>();
-        if (damageable)
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            ApplyDamage(damageable);
+            Damageable damageable = other.GetComponent<Damageable>();
+            if (damageable)
+            {
+                ApplyDamage(damageable);
+            }
         }
-    }
 
-    private void ApplyDamage(Damageable damageable)
-    {
-        damageable.TakeDamage(Damage);
-        if (destroyOnDamage)
+        private void ApplyDamage(Damageable damageable)
         {
-            Destroy(gameObject, timeToDestroy);
+            damageable.TakeDamage(Damage);
+            if (destroyOnDamage)
+            {
+                Destroy(gameObject, timeToDestroy);
+            }
         }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-public class TriggerOnPlayer : MonoBehaviour
+namespace Global
 {
-    [SerializeField] private UnityEvent OnTrigger;
-
-    private void OnTriggerEnter2D(Collider2D other)
+    public class TriggerOnPlayer : MonoBehaviour
     {
-        if (other.CompareTag("Player"))
+        [SerializeField] private UnityEvent OnTrigger;
+
+        private void OnTriggerEnter2D(Collider2D other)
         {
-            OnTrigger.Invoke();
+            if (other.CompareTag("Player"))
+            {
+                OnTrigger.Invoke();
+            }
         }
     }
 }

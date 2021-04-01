@@ -1,37 +1,40 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+namespace Managers
 {
-    [SerializeField] private GameObject[] cameras;
-    [SerializeField] private float freezeTime = 1f;
-
-    private static CameraController instance;
-
-    public static CameraController Instance { get => instance; private set => instance = value; }
-
-    private void Awake()
+    public class CameraController : MonoBehaviour
     {
-        Instance = this;
-    }
+        [SerializeField] private GameObject[] cameras;
+        [SerializeField] private float freezeTime = 1f;
 
-    public void EnableCamera(GameObject camera)
-    {
-        if (camera.activeInHierarchy) return;
+        private static CameraController instance;
 
-        for (int index = 0; index < cameras.Length; index++)
+        public static CameraController Instance { get => instance; private set => instance = value; }
+
+        private void Awake()
         {
-            cameras[index].SetActive(false);
+            Instance = this;
         }
 
-        camera.SetActive(true);
-        StartCoroutine(FreezingTime());
-    }
+        public void EnableCamera(GameObject camera)
+        {
+            if (camera.activeInHierarchy) return;
 
-    private IEnumerator FreezingTime()
-    {
-        Time.timeScale = 0;
-        yield return new WaitForSecondsRealtime(freezeTime);
-        Time.timeScale = 1;
+            for (int index = 0; index < cameras.Length; index++)
+            {
+                cameras[index].SetActive(false);
+            }
+
+            camera.SetActive(true);
+            StartCoroutine(FreezingTime());
+        }
+
+        private IEnumerator FreezingTime()
+        {
+            Time.timeScale = 0;
+            yield return new WaitForSecondsRealtime(freezeTime);
+            Time.timeScale = 1;
+        }
     }
 }

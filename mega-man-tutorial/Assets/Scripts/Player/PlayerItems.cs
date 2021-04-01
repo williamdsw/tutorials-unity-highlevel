@@ -1,59 +1,63 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerItems : MonoBehaviour
+namespace Player
 {
-    [SerializeField] private int healthTanks;
-    [SerializeField] private int energyTanks;
-
-    private PlayerHealth playerHealth;
-
-    private void Awake()
+    public class PlayerItems : MonoBehaviour
     {
-        playerHealth = GetComponent<PlayerHealth>();
-    }
+        [SerializeField] private int healthTanks;
+        [SerializeField] private int energyTanks;
 
-    public void OnHealthUsed(InputAction.CallbackContext callback)
-    {
-        if (healthTanks <= 0) return;
-        healthTanks--;
-        UpdateLifeTanks(healthTanks);
-        UpdateHealthBar();
-    }
+        private PlayerHealth playerHealth;
 
-    public void OnEnergyUsed(InputAction.CallbackContext callback)
-    {
-        if (energyTanks <= 0) return;
-        energyTanks--;
-        UpdateEnergyTanks(energyTanks);
-        UpdateEnergyBar();
-    }
-
-    public void UpdateEnergyTanks(int amount)
-    {
-        energyTanks = amount;
-        UIManager.Instance.UpdateEnergyTanks(energyTanks);
-    }
-
-    public void UpdateLifeTanks(int amount)
-    {
-        healthTanks = amount;
-        UIManager.Instance.UpdateHealthTanks(energyTanks);
-    }
-
-    public void UpdateEnergyBar()
-    {
-        PlayerWeapon weapon = FindObjectOfType<PlayerWeapon>();
-        if (weapon)
+        private void Awake()
         {
-            weapon.Energy = 1;
-            UIManager.Instance.UpdateEnergyBar(weapon.Energy);
+            playerHealth = GetComponent<PlayerHealth>();
         }
-    }
 
-    public void UpdateHealthBar()
-    {
-        UIManager.Instance.UpdateHealthBar(10);
-        playerHealth.CurrentHealth = playerHealth.MaxHealth;
+        public void OnHealthUsed(InputAction.CallbackContext callback)
+        {
+            if (healthTanks <= 0) return;
+            healthTanks--;
+            UpdateLifeTanks(healthTanks);
+            UpdateHealthBar();
+        }
+
+        public void OnEnergyUsed(InputAction.CallbackContext callback)
+        {
+            if (energyTanks <= 0) return;
+            energyTanks--;
+            UpdateEnergyTanks(energyTanks);
+            UpdateEnergyBar();
+        }
+
+        public void UpdateEnergyTanks(int amount)
+        {
+            energyTanks = amount;
+            UIManager.Instance.UpdateEnergyTanks(energyTanks);
+        }
+
+        public void UpdateLifeTanks(int amount)
+        {
+            healthTanks = amount;
+            UIManager.Instance.UpdateHealthTanks(energyTanks);
+        }
+
+        public void UpdateEnergyBar()
+        {
+            PlayerWeapon weapon = FindObjectOfType<PlayerWeapon>();
+            if (weapon)
+            {
+                weapon.Energy = 1;
+                UIManager.Instance.UpdateEnergyBar(weapon.Energy);
+            }
+        }
+
+        public void UpdateHealthBar()
+        {
+            UIManager.Instance.UpdateHealthBar(10);
+            playerHealth.CurrentHealth = playerHealth.MaxHealth;
+        }
     }
 }

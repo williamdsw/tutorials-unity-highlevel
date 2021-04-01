@@ -1,5 +1,8 @@
 ﻿
-public enum Weapons
+namespace Player
 {
-    Standard, MetalBlade, TimeStopper
+    public enum Weapons
+    {
+        Standard, MetalBlade, TimeStopper
+    }
 }

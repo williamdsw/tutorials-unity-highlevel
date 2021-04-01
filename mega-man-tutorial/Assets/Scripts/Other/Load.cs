@@ -1,17 +1,21 @@
-﻿using System.Collections;
+﻿using Managers;
+using System.Collections;
 using UnityEngine;
 
-public class Load : MonoBehaviour
+namespace Other
 {
-    [SerializeField] private AudioClip loadSong;
-    [SerializeField] private GameObject[] bosses;
-
-    private IEnumerator Start()
+    public class Load : MonoBehaviour
     {
-        bosses[GameManager.Instance.Boss].SetActive(true);
-        MusicController.Instance.PlaySong(loadSong);
-        SceneController.Instance.StartScene();
-        yield return new WaitForSeconds(8f);
-        SceneController.Instance.LoadScene(GameManager.Instance.LevelSelected);
+        [SerializeField] private AudioClip loadSong;
+        [SerializeField] private GameObject[] bosses;
+
+        private IEnumerator Start()
+        {
+            bosses[GameManager.Instance.Boss].SetActive(true);
+            MusicController.Instance.PlaySong(loadSong);
+            SceneController.Instance.StartScene();
+            yield return new WaitForSeconds(8f);
+            SceneController.Instance.LoadScene(GameManager.Instance.LevelSelected);
+        }
     }
 }

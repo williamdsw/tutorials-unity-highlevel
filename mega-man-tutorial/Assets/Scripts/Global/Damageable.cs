@@ -2,73 +2,76 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Damageable : MonoBehaviour
+namespace Global
 {
-    [SerializeField] protected int maxHealth;
-    [SerializeField] protected float invencibleTime;
-    private Color defaultColor;
-    private float timeToWait = 0.05f;
-
-    protected float currentHealth;
-    private bool canTakeDamage = true;
-
-    private SpriteRenderer spriteRenderer;
-
-    private void Awake()
+    public abstract class Damageable : MonoBehaviour
     {
-        spriteRenderer = this.GetComponent<SpriteRenderer>();
-    }
+        [SerializeField] protected int maxHealth;
+        [SerializeField] protected float invencibleTime;
+        private Color defaultColor;
+        private float timeToWait = 0.05f;
 
-    protected virtual void Start()
-    {
-        currentHealth = maxHealth;
-        defaultColor = spriteRenderer.color;
-    }
+        protected float currentHealth;
+        private bool canTakeDamage = true;
 
-    public UnityEvent OnDamage;
-    public UnityEvent OnFinishDamage;
-    public UnityEvent OnDeath;
+        private SpriteRenderer spriteRenderer;
 
-    public void TakeDamage(float amount)
-    {
-        if (!canTakeDamage) return;
-
-        canTakeDamage = false;
-        currentHealth -= amount;
-        OnDamage.Invoke();
-        StartCoroutine(TakingDamage());
-
-        if (currentHealth <= 0)
+        private void Awake()
         {
-            OnDeath.Invoke();
-            Death();
+            spriteRenderer = this.GetComponent<SpriteRenderer>();
         }
-    }
 
-    private IEnumerator TakingDamage()
-    {
-        float timer = 0;
-        while (timer < invencibleTime)
+        protected virtual void Start()
         {
-            spriteRenderer.color = Color.clear;
-            yield return new WaitForSeconds(timeToWait);
+            currentHealth = maxHealth;
+            defaultColor = spriteRenderer.color;
+        }
+
+        public UnityEvent OnDamage;
+        public UnityEvent OnFinishDamage;
+        public UnityEvent OnDeath;
+
+        public void TakeDamage(float amount)
+        {
+            if (!canTakeDamage) return;
+
+            canTakeDamage = false;
+            currentHealth -= amount;
+            OnDamage.Invoke();
+            StartCoroutine(TakingDamage());
+
+            if (currentHealth <= 0)
+            {
+                OnDeath.Invoke();
+                Death();
+            }
+        }
+
+        private IEnumerator TakingDamage()
+        {
+            float timer = 0;
+            while (timer < invencibleTime)
+            {
+                spriteRenderer.color = Color.clear;
+                yield return new WaitForSeconds(timeToWait);
+                spriteRenderer.color = defaultColor;
+                yield return new WaitForSeconds(timeToWait);
+                timer += 0.1f;
+            }
+
             spriteRenderer.color = defaultColor;
-            yield return new WaitForSeconds(timeToWait);
-            timer += 0.1f;
+            canTakeDamage = true;
+            OnFinishDamage.Invoke();
         }
 
-        spriteRenderer.color = defaultColor;
-        canTakeDamage = true;
-        OnFinishDamage.Invoke();
-    }
+        public abstract void Death();
 
-    public abstract void Death();
-
-    public void Respawn()
-    {
-        Debug.Log("Respawn?");
-        currentHealth = maxHealth;
-        canTakeDamage = true;
-        TakeDamage(0);
+        public void Respawn()
+        {
+            Debug.Log("Respawn?");
+            currentHealth = maxHealth;
+            canTakeDamage = true;
+            TakeDamage(0);
+        }
     }
 }
